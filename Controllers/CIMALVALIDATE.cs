@@ -2,8 +2,7 @@
 
 namespace IMALOpening.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
+   
     public class CIMALVALIDATE : Controller
     {
         DLL_Code dllCode = new DLL_Code();

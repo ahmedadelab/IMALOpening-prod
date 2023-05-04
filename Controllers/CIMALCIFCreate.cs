@@ -3,16 +3,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IMALOpening.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
+   
     public class CIMALCIFCreate : Controller
     {
-        DLL_Code dllCode = new DLL_Code();
-
         [HttpPost("CIMALCIFCreate")]
+      
+
+
  
         public ActionResult<string> Create([FromBody] SIMALCIF x)
         {
+            DLL_Code dllCode = new DLL_Code();
             string cifType = x.cifType;
             string idType = x.idType;
             string idNumber = x.idNumber;
