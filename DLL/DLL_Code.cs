@@ -415,7 +415,7 @@ namespace IMALOpening
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(DateTime.Now +"\n"+"ID Number: "+idNumber+ "\n"+ ex.StackTrace);
             }
             return JsonConvert.SerializeObject((LogResp)); 
         }
@@ -606,7 +606,7 @@ namespace IMALOpening
                 }
             catch(Exception ex)
             {
-                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(DateTime.Now +"\n"+"Error on CIF Validation:"+CIF+"\n"+ ex.StackTrace);
             }
             return JsonConvert.SerializeObject((LogResp));
 
@@ -788,7 +788,7 @@ namespace IMALOpening
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(DateTime.Now +"\n" +" Create GL Error for CIF No:"+CIF+ "\n"+ ex.StackTrace);
             }
             return JsonConvert.SerializeObject((LogResp));
         }
