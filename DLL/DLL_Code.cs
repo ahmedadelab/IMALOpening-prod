@@ -476,52 +476,61 @@ namespace IMALOpening
          <branchCode>5599</branchCode>
          <cifNo>" + CIF + @"</cifNo> <!-- P -->
          <autoApproveFlag>1</autoApproveFlag>      
-         <additionalFieldsList> <!-- P -->        
+                <additionalFieldsList> <!-- P -->
+         
             <additionalField>
                <fieldCode>6</fieldCode>
 <!--               <valueDate>?</valueDate>
 -->
-<!--               <valueVarchar>?</valueVarchar>           
+<!--               <valueVarchar>?</valueVarchar>
 -->
-               <valueNumber>59</valueNumber> <!-- P -->
+               <valueNumber>1</valueNumber> <!-- P -->
             </additionalField>
+
             <additionalField>
                <fieldCode>7</fieldCode>
 <!--               <valueDate>?</valueDate>-->
 <!--               <valueVarchar>?</valueVarchar>-->
-               <valueNumber>66</valueNumber>
+               <valueNumber>1</valueNumber>
             </additionalField>
+
             <additionalField>
                <fieldCode>9</fieldCode>
 <!--               <valueDate>?</valueDate>-->
 <!--               <valueVarchar>?</valueVarchar>-->
                <valueNumber>1</valueNumber>
             </additionalField>
+
             <additionalField>
                <fieldCode>17</fieldCode>
 <!--               <valueDate>?</valueDate>-->
 <!--               <valueVarchar>?</valueVarchar>-->
-               <valueNumber>7</valueNumber>
+               <valueNumber>1</valueNumber>
             </additionalField>
+
             <additionalField>
                <fieldCode>109</fieldCode>
 <!--               <valueDate>?</valueDate>-->
 <!--               <valueVarchar>?</valueVarchar>-->
-               <valueNumber>1</valueNumber>
+               <valueNumber>0</valueNumber>
             </additionalField>
+
             <additionalField>
                <fieldCode>110</fieldCode>
 <!--               <valueDate>?</valueDate>-->
                <valueVarchar>0</valueVarchar>
 <!--               <valueNumber>0</valueNumber>-->
             </additionalField>
+
             <additionalField>
                <fieldCode>111</fieldCode>
 <!--               <valueDate>?</valueDate>-->
 <!--               <valueVarchar>0</valueVarchar>-->
-               <valueNumber>1</valueNumber>
+               <valueNumber>0</valueNumber>
             </additionalField>
-         </additionalFieldsList>         
+  </additionalFieldsList>
+            
+    
          <requestContext>
             <requestID>" + RequestID + @"</requestID>
             <coreRequestTimeStamp>" + requesterTimeStamp + @"</coreRequestTimeStamp>
@@ -558,7 +567,7 @@ namespace IMALOpening
                         soapEnvelopeXml.Save(stream);
                     }
 
-                    string ResponseCIF = "";
+             
                     using (WebResponse response = request.GetResponse())
                     {
                         using (StreamReader rd = new StreamReader(response.GetResponseStream()))
@@ -716,13 +725,10 @@ namespace IMALOpening
                         soapEnvelopeXml.Save(stream);
                     }
 
-                    string StatusCode = "";
-                    string StatusDesc = "";
-                    string CifNo = "";
-                    string Curren = "";
+                  
+                
                     string IbanAccNo = "";
-                    string SerialNo = "";
-                    string BranchCode = "";
+                 
                     string additionalRef = "";
                     using (WebResponse response = request.GetResponse())
                     {
