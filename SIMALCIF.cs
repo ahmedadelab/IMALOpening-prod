@@ -48,5 +48,7 @@
         public string? CorpCIF { get; set; }
 
         public string? CIFBranch { get; set; }
+
+        public string? CorpName { get;set; }
     }
 }

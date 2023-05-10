@@ -55,11 +55,12 @@ namespace IMALOpening.Controllers
             string ChannelName = x.ChannelName;
             string CorpCIF = x.CorpCIF;
             string cifBranch = x.CIFBranch;
+            string CorpName = x.CorpName;
 
 
    string response = dllCode.CreateCIF(cifType, idType, idNumber, Country_of_issuance, dateOFbirth, idExpiryDate, maritalStatus, gender, language, shortName, longName, shortNameArabic, longNameArabic, nationality, country, firstName, secondName
                 , thirdName, lastName, firstNameArabic, secondNameArabic, thirdNameArabic, lastNameArabic, block, blockenglish, mobile, area, addressCountry, modeOfStatementDelivery, statement, economicSector, legalStatus, ranking, occupation, division
-                , department, username, password, ChannelName,CorpCIF,cifBranch);
+                , department, username, password, ChannelName,CorpCIF,cifBranch,CorpName);
 
          
             return response;
