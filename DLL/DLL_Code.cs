@@ -297,7 +297,7 @@ namespace IMALOpening
             <lastName>" + lastName + @"</lastName>
             <firstNameArabic>" + firstNameArabic + @"</firstNameArabic>
             <secondNameArabic>" + secondNameArabic + @"</secondNameArabic>
-            <thirdNameArabic>" + thirdNameArabic + @"</thirdNameArabic>
+            <thirdNameArabic>" + thirdNameArabic + @"</thirdNameArabic>8
             <lastNameArabic>" + lastNameArabic + @"</lastNameArabic>
 
             <addressList>
