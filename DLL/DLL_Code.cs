@@ -124,6 +124,7 @@ namespace IMALOpening
             public string? CorpCIF { get; set; }
 
             public string? CIFBranch { get; set; }
+            public string? CorpName { get; set; }   
 
         }
 
@@ -182,7 +183,7 @@ namespace IMALOpening
        string shortName, string longName, string shortNameArabic, string longNameArabic, string nationality, string country, string firstName, string secondName,
        string thirdName, string lastName, string firstNameArabic, string secondNameArabic, string thirdNameArabic, string lastNameArabic, string block,string blockenglish, string mobile, string area,
        string addressCountry, string modeOfStatementDelivery, string statement, string economicSector, string legalStatus, string ranking, string occupation, string division,
-       string department, string username, string password,string channelName,string CorpCIF,string CIFBranch)
+       string department, string username, string password,string channelName,string CorpCIF,string CIFBranch,string CorpName)
         {
             string SstatusCode = "";
             string SstatusDesc = "";
@@ -233,7 +234,8 @@ namespace IMALOpening
                     occupation = occupation,
                     division = division,
                     CorpCIF = CorpCIF,
-                    CIFBranch= CIFBranch,
+                    CorpName = CorpName,
+                    CIFBranch = CIFBranch,
                     channelName = channelName,
                     username= username,
                     password = "*******"
@@ -306,6 +308,10 @@ namespace IMALOpening
                   <mobile>" + mobile + @"</mobile>
                   <area>" + area + @"</area>
                   <country>" + addressCountry + @"</country>
+      <addressDescription>"+ block + @"</addressDescription>
+  <permanentAddress>"+ block + @"</permanentAddress>
+   <defaultAddress>"+ block + @"</defaultAddress>
+
                </addressDetailsCreateDC>
             </addressList>
             
@@ -321,7 +327,10 @@ namespace IMALOpening
             <occupation>" + occupation + @"</occupation>
             <division>" + division + @"</division>
             <department>" + department + @"</department>
-            <agent>"+CorpCIF+ @"</agent>
+      
+
+            <employerCifNameCode>" + CorpCIF + @"</employerCifNameCode>
+            <employerCifName>"+ CorpName +@"</employerCifName>
             <kyc>Y</kyc>
          
          </additionalDetails>
