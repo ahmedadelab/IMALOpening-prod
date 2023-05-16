@@ -271,8 +271,8 @@ namespace IMALOpening
          </serviceContext>
          
          <companyCode>1</companyCode>
-         <branchCode>"+ CIFBranch + @"</branchCode>
-         <cifBranch>"+ CIFBranch + @"</cifBranch>
+         <branchCode>" + CIFBranch + @"</branchCode>
+         <cifBranch>" + CIFBranch + @"</cifBranch>
          
          <cifDetails> <!-- P -->
          
@@ -297,7 +297,7 @@ namespace IMALOpening
             <lastName>" + lastName + @"</lastName>
             <firstNameArabic>" + firstNameArabic + @"</firstNameArabic>
             <secondNameArabic>" + secondNameArabic + @"</secondNameArabic>
-            <thirdNameArabic>" + thirdNameArabic + @"</thirdNameArabic>8
+            <thirdNameArabic>" + thirdNameArabic + @"</thirdNameArabic>
             <lastNameArabic>" + lastNameArabic + @"</lastNameArabic>
 
             <addressList>
@@ -308,10 +308,7 @@ namespace IMALOpening
                   <mobile>" + mobile + @"</mobile>
                   <area>" + area + @"</area>
                   <country>" + addressCountry + @"</country>
-      <addressDescription>"+ block + @"</addressDescription>
-  <permanentAddress>"+ block + @"</permanentAddress>
-   <defaultAddress>"+ block + @"</defaultAddress>
-
+                 
                </addressDetailsCreateDC>
             </addressList>
             
@@ -327,12 +324,10 @@ namespace IMALOpening
             <occupation>" + occupation + @"</occupation>
             <division>" + division + @"</division>
             <department>" + department + @"</department>
-      
-
-            <employerCifNameCode>" + CorpCIF + @"</employerCifNameCode>
-            <employerCifName>"+ CorpName +@"</employerCifName>
             <kyc>Y</kyc>
-         
+            <employerCifNameCode>"+CorpCIF+@"</employerCifNameCode>
+            <!--Optional:-->
+            <employerCifName>"+CorpName+@"</employerCifName>
          </additionalDetails>
          
 
@@ -424,7 +419,14 @@ namespace IMALOpening
             }
             catch(Exception ex)
             {
-                Console.WriteLine(DateTime.Now +"\n"+"ID Number: "+idNumber+ "\n"+ ex.StackTrace);
+                Console.WriteLine(DateTime.Now +"\n"+"ID Number: "+idNumber+ "\n"+ ex.StackTrace+"\n"+soapResult);
+                LogResp.Add(new RespCreateCIF
+                {
+                    StatusCode = "-999",
+                    StatusDesc = soapResult
+
+
+                }); 
             }
             return JsonConvert.SerializeObject((LogResp)); 
         }
@@ -615,7 +617,15 @@ namespace IMALOpening
                 }
             catch(Exception ex)
             {
-                Console.WriteLine(DateTime.Now +"\n"+"Error on CIF Validation:"+CIF+"\n"+ ex.StackTrace);
+                Console.WriteLine(DateTime.Now +"\n"+"Error on CIF Validation:"+CIF+"\n"+ ex.StackTrace+"\n" + soapResult);
+
+                LogResp.Add(new RespValidateCIF
+                {
+                    statusCode = "-999",
+                    statusDesc = soapResult
+
+
+                });
             }
             return JsonConvert.SerializeObject((LogResp));
 
@@ -794,7 +804,14 @@ namespace IMALOpening
             }
             catch (Exception ex)
             {
-                Console.WriteLine(DateTime.Now +"\n" +" Create GL Error for CIF No:"+CIF+ "\n"+ ex.StackTrace);
+                Console.WriteLine(DateTime.Now +"\n" +" Create GL Error for CIF No:"+CIF+ "\n"+ ex.StackTrace +"\n"+soapResult);
+                LogResp.Add(new RespCreateGL
+                {
+                    statusCode = "-999",
+                    statusDesc = soapResult
+
+
+                }) ;
             }
             return JsonConvert.SerializeObject((LogResp));
         }
