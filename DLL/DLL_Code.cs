@@ -247,7 +247,6 @@ namespace IMALOpening
                 {
                     HttpWebRequest request = CreateWebRequestCIF();
                     XmlDocument soapEnvelopeXml = new XmlDocument();
-
                     soapEnvelopeXml.LoadXml(@"<soapenv:Envelope xmlns:soapenv=""http://schemas.xmlsoap.org/soap/envelope/"" xmlns:cif=""cifManagementWs"" >
    <soapenv:Header/>
    <soapenv:Body>
@@ -308,7 +307,6 @@ namespace IMALOpening
                   <mobile>" + mobile + @"</mobile>
                   <area>" + area + @"</area>
                   <country>" + addressCountry + @"</country>
-                 
                </addressDetailsCreateDC>
             </addressList>
             
@@ -324,10 +322,10 @@ namespace IMALOpening
             <occupation>" + occupation + @"</occupation>
             <division>" + division + @"</division>
             <department>" + department + @"</department>
+            <employerCifNameCode>" + CorpCIF + @"</employerCifNameCode>
+            <employerCifName>" + CorpName + @"</employerCifName>
             <kyc>Y</kyc>
-            <employerCifNameCode>"+CorpCIF+@"</employerCifNameCode>
-            <!--Optional:-->
-            <employerCifName>"+CorpName+@"</employerCifName>
+         
          </additionalDetails>
          
 
@@ -359,6 +357,7 @@ namespace IMALOpening
    </soapenv:Body>
 </soapenv:Envelope>
 ");
+
 
                     using (Stream stream = request.GetRequestStream())
                     {
