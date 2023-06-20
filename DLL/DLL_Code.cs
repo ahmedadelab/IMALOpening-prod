@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using IMALOpening;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System.Data;
 using System.Net;
 using System.Xml;
 using System.Xml.Linq;
+
+
 
 namespace IMALOpening
 {
@@ -12,45 +15,11 @@ namespace IMALOpening
 
         DAL_Code DalCode = new DAL_Code();
 
-        public static HttpWebRequest CreateWebRequestOpenAcc()
-        {
-            var MyConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-            var OpenAcc = MyConfig.GetValue<string>("AppSettings:OpenAccUrl");
-            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(OpenAcc);
-            webRequest.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
-            webRequest.Headers.Add(@"SOAP:Action");
-            webRequest.ContentType = "text/xml;charset=\"utf-8\"";
-            webRequest.Accept = "text/xml";
-            webRequest.Method = "POST";
-            return webRequest;
-        }
-        public static HttpWebRequest CreateWebRequestCIF()
-        {
-            var MyConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-            var CreateCIF = MyConfig.GetValue<string>("AppSettings:CreateCIF");
-            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(CreateCIF);
-            webRequest.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
-            webRequest.Headers.Add(@"SOAP:Action");
-            webRequest.ContentType = "text/xml;charset=\"utf-8\"";
-            webRequest.Accept = "text/xml";
-            webRequest.Method = "POST";
-            return webRequest;
-        }
+        DHttps dHttps = new DHttps();
 
-        public static HttpWebRequest CreateWebRequestValidateCIF()
-        {
-            var MyConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-            var CreateValidateCIF = MyConfig.GetValue<string>("AppSettings:ValidateCIFUrl");
-            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(CreateValidateCIF);
-            webRequest.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
-            webRequest.Headers.Add(@"SOAP:Action");
-            webRequest.ContentType = "text/xml;charset=\"utf-8\"";
-            webRequest.Accept = "text/xml";
-            webRequest.Method = "POST";
-            return webRequest;
-        }
         public string CheckChannel(String ChannelName, string username, string ServiceName)
         {
+
             string ChannelIP = "";
             string statusChannel = "";
             string EnableChannel = "";
@@ -78,125 +47,25 @@ namespace IMALOpening
             return statusChannel;
         }
 
-        public class ReqCreateCIF
-        {
-            public string? cifType { get; set; }
-            public string? idType { get; set; }
-            public string? idNumber { get; set; }
-            public string? dateOFbirth { get; set; }
-            public string? idExpiryDate { get; set; }
-            public string? maritalStatus { get; set; }
-            public string? gender { get; set; }
-            public string? language { get; set; }
-            public string? shortName { get; set; }
-            public string? longName { get; set; }
-            public string? shortNameArabic { get; set; }
-            public string? longNameArabic { get; set; }
-            public string? nationality { get; set; }
-            public string? country { get; set; }
-            public string? firstName { get; set; }
-            public string? secondName { get; set; }
-            public string? thirdName { get; set; }
-            public string? lastName { get; set; }
-            public string? firstNameArabic { get; set; }
-            public string? secondNameArabic { get; set; }
-            public string? thirdNameArabic { get; set; }
-            public string? lastNameArabic { get; set; }
-            public string? block { get; set; }
 
-            public string? blockenglish { get; set; }
-            public string? mobile { get; set; }
-            public string? area { get; set; }
-            public string? addressCountry { get; set; }
-            public string? modeOfStatementDelivery { get; set; }
-            public string? statement { get; set; }
-            public string? economicSector { get; set; }
-            public string? legalStatus { get; set; }
-            public string? ranking { get; set; }
-            public string? occupation { get; set; }
-            public string? division { get; set; }
-            public string? department { get; set; }
-            public string? username { get; set; }
-            public string? password { get; set; }
-
-            public string? channelName { get; set; }
-
-            public string? CorpCIF { get; set; }
-
-            public string? CIFBranch { get; set; }
-            public string? CorpName { get; set; }   
-
-        }
-
-        public class RespCreateCIF
-        {
-            public string? StatusCode { get; set; }
-
-            public string? StatusDesc { get; set; }
-
-            public string? CIF { get; set; }
-        }
-
-        public class ReqValidiateCIF
-        {
-
-            public string? CIFno { get; set; }
-            public string? autoApproveFlag { get; set; }
-
-            public string? username { get; set; }
-
-            public string? password { get; set; }
-
-
-        }
-
-        public class RespValidateCIF
-        {
-            public string? statusCode { get; set; }
-
-            public string? statusDesc { get; set; }
-        }
-    
-        public class ReqCreateGL
-        {
-            public string? CIF { get; set; }
-            public string? currency { get; set; }
-            public string? accGl { get; set; }
-            public string? Branch { get; set; }
-            public string? username { get; set; }
-
-            public string? Password { get; set; }
-            public string? ChannelName { get; set; }
-        }
-
-        public class RespCreateGL
-        {
-            public string? additionalRef { get; set; }
-
-            public string? ibanAccNo { get; set; }
-
-            public string? statusCode { get; set; }
-
-            public string? statusDesc { get; set; }
-        }
-       public string CreateCIF(string cifType, string idType, string idNumber,string Country_of_issuance, string dateOFbirth, string idExpiryDate, string maritalStatus, string gender, string language,
-       string shortName, string longName, string shortNameArabic, string longNameArabic, string nationality, string country, string firstName, string secondName,
-       string thirdName, string lastName, string firstNameArabic, string secondNameArabic, string thirdNameArabic, string lastNameArabic, string block,string blockenglish, string mobile, string area,
-       string addressCountry, string modeOfStatementDelivery, string statement, string economicSector, string legalStatus, string ranking, string occupation, string division,
-       string department, string username, string password,string channelName,string CorpCIF,string CIFBranch,string CorpName)
+        public string CreateCIF(string cifType, string idType, string idNumber, string Country_of_issuance, string dateOFbirth, string idExpiryDate, string maritalStatus, string gender, string language,
+        string shortName, string longName, string shortNameArabic, string longNameArabic, string nationality, string country, string firstName, string secondName,
+        string thirdName, string lastName, string firstNameArabic, string secondNameArabic, string thirdNameArabic, string lastNameArabic, string block, string blockenglish, string mobile, string area,
+        string addressCountry, string modeOfStatementDelivery, string statement, string economicSector, string legalStatus, string ranking, string occupation, string division,
+        string department, string username, string password, string channelName, string CorpCIF, string CIFBranch, string CorpName)
         {
             string SstatusCode = "";
             string SstatusDesc = "";
             string soapResult = "";
             string RequestID = "MW-CIFC-" + idNumber + "-" + DateTime.Now.ToString("ddMMyyyyHHmmssff");
             string requesterTimeStamp = System.DateTime.Now.ToString("yyyy-MM-dd" + "T" + "HH:mm:ss");
-            List<ReqCreateCIF> logrequest = new List<ReqCreateCIF>();
-            List<RespCreateCIF> LogResp = new List<RespCreateCIF>();
+            List<DLLPS.ReqCreateCIF> logrequest = new List<DLLPS.ReqCreateCIF>();
+            List<DLLPS.RespCreateCIF> LogResp = new List<DLLPS.RespCreateCIF>();
             try
             {
                 string status = CheckChannel(channelName, username, "CreateCIF");
 
-                logrequest.Add(new ReqCreateCIF
+                logrequest.Add(new DLLPS.ReqCreateCIF
                 {
 
                     cifType = cifType,
@@ -210,7 +79,7 @@ namespace IMALOpening
                     shortName = shortName,
                     longName = longName,
                     shortNameArabic = shortNameArabic,
-                    longNameArabic= longNameArabic,
+                    longNameArabic = longNameArabic,
                     nationality = nationality,
                     country = country,
                     firstName = firstName,
@@ -237,15 +106,17 @@ namespace IMALOpening
                     CorpName = CorpName,
                     CIFBranch = CIFBranch,
                     channelName = channelName,
-                    username= username,
+                    username = username,
                     password = "*******"
                 });
                 string ClientRequest = JsonConvert.SerializeObject(logrequest);
                 DalCode.InsertLog("CreateCIF", Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")), ClientRequest, "Pending", channelName, RequestID);
-       
+
                 if (status == "Enabled")
                 {
-                    HttpWebRequest request = CreateWebRequestCIF();
+
+
+                    HttpWebRequest request = DHttps.CreateWebRequestCIF();
                     XmlDocument soapEnvelopeXml = new XmlDocument();
                     soapEnvelopeXml.LoadXml(@"<soapenv:Envelope xmlns:soapenv=""http://schemas.xmlsoap.org/soap/envelope/"" xmlns:cif=""cifManagementWs"" >
    <soapenv:Header/>
@@ -379,14 +250,14 @@ namespace IMALOpening
                             XmlNodeList elstatusDesc = xmlDoc.GetElementsByTagName("statusDesc");
                             SstatusDesc = elstatusDesc[0].InnerXml;
                             if (SstatusCode == "0")
-                            { 
+                            {
                                 XmlNodeList ELCIF = xmlDoc.GetElementsByTagName("cifNo");
-                            ResponseCIF = ELCIF[0].InnerXml;
-                        }
+                                ResponseCIF = ELCIF[0].InnerXml;
+                            }
 
                         }
                     }
-                    LogResp.Add(new RespCreateCIF
+                    LogResp.Add(new DLLPS.RespCreateCIF
                     {
                         StatusCode = SstatusCode,
                         StatusDesc = SstatusDesc,
@@ -396,10 +267,10 @@ namespace IMALOpening
                 }
                 else
                 {
-                    LogResp.Add(new RespCreateCIF
+                    LogResp.Add(new DLLPS.RespCreateCIF
                     {
-                    StatusCode = "-985",
-                    StatusDesc = "you are not authorize"
+                        StatusCode = "-985",
+                        StatusDesc = "you are not authorize"
 
 
                     });
@@ -413,42 +284,43 @@ namespace IMALOpening
                 {
                     statuslog = "Failed";
                 }
-                DalCode.UpdateLog(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), JsonConvert.SerializeObject((LogResp)), statuslog, channelName, RequestID);
+                DalCode.UpdateLog(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), JsonConvert.SerializeObject(LogResp), statuslog, channelName, RequestID);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Console.WriteLine(DateTime.Now +"\n"+"ID Number: "+idNumber+ "\n"+ ex.StackTrace+"\n"+soapResult);
-                LogResp.Add(new RespCreateCIF
+                Console.WriteLine(DateTime.Now + "\n" + "ID Number: " + idNumber + "\n" + ex.StackTrace + "\n" + soapResult);
+                LogResp.Add(new DLLPS.RespCreateCIF
                 {
                     StatusCode = "-999",
                     StatusDesc = soapResult
 
 
-                }); 
+                });
+                DalCode.UpdateLog(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), JsonConvert.SerializeObject(LogResp), "Failed", channelName, RequestID);
             }
-            return JsonConvert.SerializeObject((LogResp)); 
+            return JsonConvert.SerializeObject(LogResp);
         }
 
-        public string CIFVALIDATE(string CIF,string username,string ChannelName,string password)
+        public string CIFVALIDATE(string CIF, string username, string ChannelName, string password)
         {
             string SstatusCode = "";
             string SstatusDesc = "";
             string soapResult = "";
             string RequestID = "MW-CIFV-" + CIF + "-" + DateTime.Now.ToString("ddMMyyyyHHmmssff");
             string requesterTimeStamp = System.DateTime.Now.ToString("yyyy-MM-dd" + "T" + "HH:mm:ss");
-            List<ReqValidiateCIF> logrequest = new List<ReqValidiateCIF>();
-            List<RespValidateCIF> LogResp = new List<RespValidateCIF>();
+            List<DLLPS.ReqValidiateCIF> logrequest = new List<DLLPS.ReqValidiateCIF>();
+            List<DLLPS.RespValidateCIF> LogResp = new List<DLLPS.RespValidateCIF>();
             try
             {
                 string status = CheckChannel(ChannelName, username, "ValidateCIF");
 
-                logrequest.Add(new ReqValidiateCIF
+                logrequest.Add(new DLLPS.ReqValidiateCIF
                 {
                     CIFno = CIF,
-                    autoApproveFlag ="1",
-                    username= username,
-                    password ="*******"
+                    autoApproveFlag = "1",
+                    username = username,
+                    password = "*******"
 
 
                 });
@@ -456,7 +328,8 @@ namespace IMALOpening
                 DalCode.InsertLog("ValidateCIF", Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")), ClientRequest, "Pending", ChannelName, RequestID);
                 if (status == "Enabled")
                 {
-                    HttpWebRequest request = CreateWebRequestCIF();
+
+                    HttpWebRequest request = DHttps.CreateWebRequestCIF();
                     XmlDocument soapEnvelopeXml = new XmlDocument();
 
                     soapEnvelopeXml.LoadXml(@"<soapenv:Envelope xmlns:soapenv=""http://schemas.xmlsoap.org/soap/envelope/"" xmlns:cif=""cifManagementWs"">
@@ -585,65 +458,66 @@ namespace IMALOpening
 
                         }
                     }
-                    LogResp.Add(new RespValidateCIF
+                    LogResp.Add(new DLLPS.RespValidateCIF
                     {
                         statusCode = SstatusCode,
                         statusDesc = SstatusDesc
-                   
+
 
                     });
                 }
                 else
                 {
-                        LogResp.Add(new RespValidateCIF
-                        {
-                            statusCode = "-985",
-                            statusDesc = "you are not authorize"
+                    LogResp.Add(new DLLPS.RespValidateCIF
+                    {
+                        statusCode = "-985",
+                        statusDesc = "you are not authorize"
 
 
-                        });
-                    }
-                    string statuslog = "";
-                    if (SstatusCode == "0")
-                    {
-                        statuslog = "Success";
-                    }
-                    else
-                    {
-                        statuslog = "Failed";
-                    }
-                    DalCode.UpdateLog(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), JsonConvert.SerializeObject((LogResp)), statuslog, ChannelName, RequestID);
+                    });
                 }
-            catch(Exception ex)
+                string statuslog = "";
+                if (SstatusCode == "0")
+                {
+                    statuslog = "Success";
+                }
+                else
+                {
+                    statuslog = "Failed";
+                }
+                DalCode.UpdateLog(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), JsonConvert.SerializeObject(LogResp), statuslog, ChannelName, RequestID);
+            }
+            catch (Exception ex)
             {
-                Console.WriteLine(DateTime.Now +"\n"+"Error on CIF Validation:"+CIF+"\n"+ ex.StackTrace+"\n" + soapResult);
+                Console.WriteLine(DateTime.Now + "\n" + "Error on CIF Validation:" + CIF + "\n" + ex.StackTrace + "\n" + soapResult);
 
-                LogResp.Add(new RespValidateCIF
+                LogResp.Add(new DLLPS.RespValidateCIF
                 {
                     statusCode = "-999",
                     statusDesc = soapResult
 
 
                 });
+                DalCode.UpdateLog(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), JsonConvert.SerializeObject(LogResp), "Failed", ChannelName, RequestID);
             }
-            return JsonConvert.SerializeObject((LogResp));
+            return JsonConvert.SerializeObject(LogResp);
 
         }
 
 
-        public string GLCreation(string CIF,string currency,string accGl,string Branch,string username,string password,string channelName)
+        public string GLCreation(string CIF, string currency, string accGl, string Branch, string username, string password, string channelName)
         {
             string SstatusCode = "";
             string SstatusDesc = "";
             string soapResult = "";
             string RequestID = "MW-GLC-" + CIF + "-" + DateTime.Now.ToString("ddMMyyyyHHmmssff");
             string requesterTimeStamp = System.DateTime.Now.ToString("yyyy-MM-dd" + "T" + "HH:mm:ss");
-            List<ReqCreateGL> logrequest = new List<ReqCreateGL>();
-            List<RespCreateGL> LogResp = new List<RespCreateGL>();
+            List<DLLPS.ReqCreateGL> logrequest = new List<DLLPS.ReqCreateGL>();
+            List<DLLPS.RespCreateGL> LogResp = new List<DLLPS.RespCreateGL>();
             try
             {
                 string status = CheckChannel(channelName, username, "CreateGL");
-                logrequest.Add(new ReqCreateGL
+                logrequest.Add(new DLLPS.ReqCreateGL
                 {
                     CIF = CIF,
                     currency = currency,
@@ -658,7 +532,7 @@ namespace IMALOpening
                 DalCode.InsertLog("CreateGL", Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")), ClientRequest, "Pending", channelName, RequestID);
                 if (status == "Enabled")
                 {
-                    HttpWebRequest request = CreateWebRequestOpenAcc();
+                    HttpWebRequest request = DHttps.CreateWebRequestOpenAcc();
                     XmlDocument soapEnvelopeXml = new XmlDocument();
                     soapEnvelopeXml.LoadXml(@"<soapenv:Envelope xmlns:soapenv=""http://schemas.xmlsoap.org/soap/envelope/"" xmlns:gen=""generalAccountsWs"">
    <soapenv:Header/>
@@ -734,10 +608,10 @@ namespace IMALOpening
                         soapEnvelopeXml.Save(stream);
                     }
 
-                  
-                
+
+
                     string IbanAccNo = "";
-                 
+
                     string additionalRef = "";
                     using (WebResponse response = request.GetResponse())
                     {
@@ -749,29 +623,29 @@ namespace IMALOpening
                             XmlDocument xmlDoc = new XmlDocument();
                             xmlDoc.LoadXml(soapResult);
                             XmlNodeList elemStatusCode = xmlDoc.GetElementsByTagName("statusCode");
-                        
+
                             SstatusCode = elemStatusCode[0].InnerXml;
                             XmlNodeList elstatusDesc = xmlDoc.GetElementsByTagName("statusDesc");
                             SstatusDesc = elstatusDesc[0].InnerXml;
 
                             if (SstatusCode == "0")
                             {
-                        
-                         
-                  
+
+
+
                                 XmlNodeList elemIbanAccNo = xmlDoc.GetElementsByTagName("ibanAccNo");
                                 IbanAccNo = elemIbanAccNo[0].InnerXml;
-                   
-                          
+
+
                                 XmlNodeList elemAddRef = xmlDoc.GetElementsByTagName("additionalRef");
                                 additionalRef = elemAddRef[0].InnerXml;
                             }
 
-                            LogResp.Add(new RespCreateGL
+                            LogResp.Add(new DLLPS.RespCreateGL
                             {
-                              
+
                                 ibanAccNo = IbanAccNo,
-                                additionalRef= additionalRef,
+                                additionalRef = additionalRef,
                                 statusCode = SstatusCode,
                                 statusDesc = SstatusDesc
                             });
@@ -781,7 +655,7 @@ namespace IMALOpening
                 }
                 else
                 {
-                    LogResp.Add(new RespCreateGL
+                    LogResp.Add(new DLLPS.RespCreateGL
                     {
                         statusCode = "-985",
                         statusDesc = "you are not authorize"
@@ -803,14 +677,15 @@ namespace IMALOpening
             }
             catch (Exception ex)
             {
-                Console.WriteLine(DateTime.Now +"\n" +" Create GL Error for CIF No:"+CIF+ "\n"+ ex.StackTrace +"\n"+soapResult);
-                LogResp.Add(new RespCreateGL
+                Console.WriteLine(DateTime.Now + "\n" + " Create GL Error for CIF No:" + CIF + "\n" + ex.StackTrace + "\n" + soapResult);
+                LogResp.Add(new DLLPS.RespCreateGL
                 {
                     statusCode = "-999",
                     statusDesc = soapResult
 
 
-                }) ;
+                });
+                DalCode.UpdateLog(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), JsonConvert.SerializeObject(LogResp), "Failed", channelName, RequestID);
             }
             return JsonConvert.SerializeObject((LogResp));
         }
